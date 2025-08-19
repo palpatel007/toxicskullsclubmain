@@ -1,0 +1,302 @@
+
+@font-face {
+  font-family: 'FunnelDisplay';
+  src: url('./font/92zatBhPNqw73oTd4g.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'normalDisplay';
+  src: url('./font/92zatBhPNqw73oTd4g.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Toxic Skulls Club theme colors - matching image */
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 20%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 20%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 40%;
+    --input: 0 0% 40%;
+    --ring: 0 0% 60%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white font-inter;
+    background: #000000;
+    min-height: 100vh;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  /* Set fonts */
+  html, body {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6  {
+    font-family: 'FunnelDisplay';
+    font-weight: 700;
+  }
+
+  p {
+    font-family: 'normalDisplay';
+  }
+
+  /* Responsive typography */
+  h1 {
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl;
+  }
+  
+  h2 {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+  
+  h3 {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  /* Improve button touch targets on mobile */
+  button, a {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Better mobile spacing */
+  .container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+}
+.main-bg-image{
+  background: #000000;
+}
+@layer components {
+  /* Header styling */
+  .main-header {
+    @apply bg-black backdrop-blur-sm p-4;
+  }
+  
+  /* Logo styling */
+  .toxic-logo {
+    @apply w-16 h-12 rounded-full flex items-center justify-center;
+  }
+  
+  /* Gradient text */
+  .gradient-text-green {
+    @apply bg-gradient-to-r bg-clip-text;
+    font-family: 'FunnelDisplay';
+    font-weight: 700;
+  }
+  
+  .gradient-text-rainbow {
+    @apply bg-gradient-to-r from-yellow-400 via-orange-500 via-pink-500 to-purple-500 bg-clip-text;
+    font-family: 'FunnelDisplay';
+    font-weight: 700;
+  }
+  
+  /* Main content panels */
+  .content-panel {
+    @apply bg-black rounded-xl shadow-lg p-6;
+  }
+  
+  /* Download option cards */
+  .download-option {
+    @apply flex items-center justify-between p-4 border-b border-gray-300 last:border-b-0 hover:bg-black hover:text-white transition-all duration-300 cursor-pointer rounded-lg;
+  }
+  
+  .download-icon {
+    @apply w-8 h-8 rounded flex items-center justify-center text-white font-bold text-sm;
+  }
+  
+  .download-radio {
+    @apply w-4 h-4 border-2 border-gray-400 rounded-full transition-all duration-300;
+  }
+  
+  .download-radio.selected {
+    @apply border-black bg-black;
+  }
+  
+  /* Connect wallet button */
+  .connect-button {
+    /* @apply bg-gradient-to-r from-green-500 to-purple-600 text-white px-6 py-3 rounded-lg font-bold transition-all duration-300;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); */
+    background-color: #FFFFFF;
+    font-family: "Jost", Sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 16px;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    color: #000000;
+    border-radius: 20px;
+    padding: 8px 20px;
+    position: relative;
+  }
+  .connect-button:before {
+    content: "";
+    position: absolute;
+    background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/btn-after1.png) center center / cover no-repeat scroll;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 33%;
+    height: 50%;
+    /* right: 0; */
+    filter: invert(100%);
+    left: 65%;
+}
+.connect-button:after {
+  content: "";
+  position: absolute;
+  background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/icon-after.png) center center / cover no-repeat scroll;
+  top: 40px;
+  left: 0;
+  right: 0;
+  width: 25%;
+  height: 50%;
+  left: 7%;
+  filter: invert(100%);
+
+}
+  
+  .connect-button:hover {
+    @apply shadow-lg;
+    transform: translateY(-2px);
+  }
+  
+  /* NFT image container */
+  .nft-image-container {
+    @apply w-full h-48 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden mb-4;
+    position: relative;
+  }
+  
+  .nft-image {
+    @apply w-full h-full object-cover;
+  }
+  
+  /* Responsive grid */
+  .main-grid {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-6 mx-auto;
+  }
+
+  /* Collection selector styling */
+  .collection-selector {
+    @apply mb-6;
+  }
+
+  .collection-card {
+    @apply transition-all duration-300;
+    backdrop-filter: blur(10px);
+  }
+
+  .collection-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .collection-card.selected {
+    @apply border-green-400 bg-green-900/20;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+
+  /* Chain selector styling */
+  .chain-selector {
+    @apply mb-6;
+  }
+
+  .chain-card {
+    @apply transition-all duration-300;
+    backdrop-filter: blur(10px);
+  }
+
+  .chain-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .chain-card.selected {
+    @apply border-green-400 bg-green-900/20;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+
+  /* Chain button styling */
+  .chain-button {
+    @apply transition-all duration-300;
+    backdrop-filter: blur(10px);
+  }
+
+  .chain-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .chain-button:focus {
+    outline: none;
+  }
+}
+
+/* React Toastify custom styles */
+.Toastify__toast {
+  @apply bg-gray-800/90 border border-gray-600 text-white;
+}
+
+.Toastify__toast--success {
+  @apply border-green-500;
+}
+
+.Toastify__toast--error {
+  @apply border-red-500;
+}
+
+.Toastify__toast--info {
+  @apply border-blue-500;
+}
+
+/* Mobile-specific toast positioning */
+@media (max-width: 640px) {
+  .Toastify__toast-container {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+  }
+  
+  .Toastify__toast {
+    font-size: 0.875rem;
+  }
+}
+
+/* Prevent zoom on input focus on iOS */
+@media screen and (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Smooth scrolling for mobile */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
