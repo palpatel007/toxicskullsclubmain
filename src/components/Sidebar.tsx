@@ -75,8 +75,9 @@ export const Sidebar = ({ selectedFormat, onFormatChange, selectedCollection, fo
       case 'skulls-on-ape':
         return 'Skull on Ape PFP';
       case 'toxic-skulls-club':
+        return 'Toxic PFP';
       default:
-        return 'Pre-Toxic PFP';
+        return 'Toxic PFP';
     }
   };
 
@@ -151,11 +152,11 @@ export const Sidebar = ({ selectedFormat, onFormatChange, selectedCollection, fo
           {downloadOptions.map((option) => (
             <motion.div
               key={option.id}
-              className={`download-option group ${formatChanged && (option.id === 'Pre-Toxic PFP' || option.id === 'Mayhem PFP' || option.id === 'Skull on Ape PFP') ? 'ring-2 ring-green-400 ring-opacity-75' : ''}`}
+              className={`download-option group ${formatChanged && option.id === selectedFormat ? 'ring-2 ring-green-400 ring-opacity-75' : ''}`}
               onClick={() => onFormatChange(option.id)}
               whileHover={{ x: 4 }}
               whileTap={{ scale: 0.98 }}
-              animate={formatChanged && (option.id === 'Pre-Toxic PFP' || option.id === 'Mayhem PFP' || option.id === 'Skull on Ape PFP') ? { scale: [1, 1.02, 1] } : {}}
+              animate={formatChanged && option.id === selectedFormat ? { scale: [1, 1.02, 1] } : {}}
               transition={{ duration: 0.3 }}
             >
               <div className="flex items-center gap-4">

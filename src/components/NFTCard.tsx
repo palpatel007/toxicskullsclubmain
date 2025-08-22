@@ -54,6 +54,42 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
 
   const cleanTokenId = String(nft.token_id).replace(/^0+/, '').trim();
 
+  // Utilities to resolve IPFS URLs to multiple HTTP gateways and sanitize bad characters
+  const sanitizeUrl = (url: string): string => {
+    let cleaned = url.trim();
+    // Strip trailing raw '}', quotes, or encoded '}' (%7D)
+    cleaned = cleaned.replace(/(%7D|%7d|[\s\}"']+)$/g, '');
+    return cleaned;
+  };
+
+  const expandIpfsGateways = (url: string): string[] => {
+    const gateways = [
+      'https://ipfs.io/ipfs/',
+      'https://cloudflare-ipfs.com/ipfs/',
+      'https://gateway.pinata.cloud/ipfs/'
+    ];
+
+    // ipfs://CID or ipfs://CID/path
+    if (url.startsWith('ipfs://')) {
+      const rest = url.replace('ipfs://', '');
+      return gateways.map((g) => sanitizeUrl(g + rest));
+    }
+
+    // Already points to an HTTP gateway; try alternative gateways too
+    try {
+      const u = new URL(url);
+      const parts = u.pathname.split('/');
+      const ipfsIndex = parts.findIndex((p) => p === 'ipfs');
+      if (ipfsIndex >= 0) {
+        const rest = parts.slice(ipfsIndex + 1).join('/');
+        return gateways.map((g) => sanitizeUrl(g + rest));
+      }
+    } catch {
+      // Not a URL; return as-is
+    }
+    return [sanitizeUrl(url)];
+  };
+
   // Load local images and 3D files only when needed
   useEffect(() => {
     const loadLocalAssets = async () => {
@@ -163,15 +199,26 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
     }
     
     // Try multiple image sources for better reliability
-    const imageSources = [
+    // Build a list of sources, expanding ipfs links to multiple http gateways, then flatten
+    const baseSources = [
       nft.metadata.image_url,
       nft.metadata.image,
       nft.metadata.external_url,
       nft.metadata.image_uri,
       nft.metadata.imageUrl
-    ].filter(Boolean); // Remove undefined/null values
+    ].filter(Boolean) as string[];
+
+    // For Skulls of Mayhem, prioritize Dune API image URL
+    if (selectedCollection?.id === 'skulls-of-mayhem') {
+      const chain = selectedCollection.chainId || 1;
+      const duneUrl = `https://api.sim.dune.com/v1/evm/collectible/image/${chain}/${selectedCollection.contract}/${cleanTokenId}`;
+      baseSources.unshift(duneUrl);
+    }
+
+    const imageSources = baseSources.flatMap((s) => expandIpfsGateways(s));
     
-    return imageSources[currentImageIndex] || null;
+    const chosen = imageSources[currentImageIndex] || null;
+    return chosen;
   };
 
   const imageSrc = getImageSrc();
@@ -191,13 +238,14 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
     }
     
     // Try next image source if available
-    const imageSources = [
+    const baseSources = [
       nft.metadata.image_url,
       nft.metadata.image,
       nft.metadata.external_url,
       nft.metadata.image_uri,
       nft.metadata.imageUrl
-    ].filter(Boolean);
+    ].filter(Boolean) as string[];
+    const imageSources = baseSources.flatMap((s) => expandIpfsGateways(s));
     
     if (currentImageIndex < imageSources.length - 1) {
       setCurrentImageIndex(currentImageIndex + 1);
@@ -220,7 +268,7 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
     setImageLoading(true);
     setImageError(false);
     setCurrentImageIndex(0);
-  }, [imageSrc, downloadFormat]);
+  }, [downloadFormat]);
 
   const show3D = downloadFormat === 'GLB' || downloadFormat === 'FBX';
 
@@ -439,7 +487,8 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
           }
           
           // Default download for other collections or non-HTML files
-          const response = await fetch(nft.metadata.image_url, { mode: 'cors' });
+          const downloadSrc = imageSrc || nft.metadata.image_url;
+          const response = await fetch(downloadSrc, { mode: 'cors' });
           const blob = await response.blob();
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');

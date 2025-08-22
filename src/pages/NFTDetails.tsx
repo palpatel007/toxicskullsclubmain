@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useDownload } from '../contexts/DownloadContext';
 import { NFT, APIResponse } from '../hooks/useNFTs';
 import { useAccount } from 'wagmi';
+import { buildApiUrl } from '../utils/api';
 
 const NFTDetails = () => {
   const { contractAddress, tokenId } = useParams();
@@ -24,8 +25,7 @@ const NFTDetails = () => {
       setError(null);
 
       try {
-        // Replace with your actual API endpoint
-        const apiUrl = `YOUR_API_ENDPOINT_HERE?wallet=${address}&contract=${contractAddress}`;
+        const apiUrl = buildApiUrl(`/api/nfts?wallet=${address}&contract=${contractAddress}`);
         
         const response = await fetch(apiUrl);
         

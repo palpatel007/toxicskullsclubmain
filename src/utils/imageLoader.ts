@@ -1,3 +1,4 @@
+import { buildApiUrl } from './api';
 // Secure image loading utility with ownership verification
 class SecureImageLoader {
   private cache = new Map<string, string>();
@@ -33,7 +34,7 @@ class SecureImageLoader {
 
       private async loadImageInternal(format: string, tokenId: string, wallet: string, contract: string, chainId: number): Promise<string | null> {
       try {
-        const apiUrl = `http://192.168.1.3:3001/api/secure-image/${format}/${tokenId}?wallet=${wallet}&contract=${contract}&chainId=${chainId}`;
+        const apiUrl = buildApiUrl(`/api/secure-image/${format}/${tokenId}?wallet=${wallet}&contract=${contract}&chainId=${chainId}`);
       
       const response = await fetch(apiUrl);
       

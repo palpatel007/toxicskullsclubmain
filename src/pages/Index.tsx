@@ -8,11 +8,12 @@ import { CollectionSelector, Collection, COLLECTIONS } from '../components/Colle
 import { useNFTs } from '../hooks/useNFTs';
 import toxicSkullsClubLogo from '../assets/CollectionsLogo/ToxicSkullsClub.jpg';
 import skullsOfMayhemLogo from '../assets/CollectionsLogo/skullsofmayhem.jpg';
+import skullsOnApeLogo from '../assets/CollectionsLogo/skullonape.png';
 
 const Index = () => {
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
-  const [selectedFormat, setSelectedFormat] = useState('Pre-Toxic PFP');
+  const [selectedFormat, setSelectedFormat] = useState('Toxic PFP');
   const [selectedCollection, setSelectedCollection] = useState<Collection>(COLLECTIONS[0]);
   const [formatChanged, setFormatChanged] = useState(false);
 
@@ -26,8 +27,9 @@ const Index = () => {
       case 'skulls-on-ape':
         return 'Skull on Ape PFP';
       case 'toxic-skulls-club':
+        return 'Toxic PFP';
       default:
-        return 'Pre-Toxic PFP';
+        return 'Toxic PFP';
     }
   };
 
@@ -67,7 +69,7 @@ const Index = () => {
           <div className="content-panel">
             {!isConnected ? (
               <>
-                <div className="w-full min-h-96 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 rounded-lg flex items-center justify-center p-8">
+                <div className="w-full min-h-96  rounded-lg flex items-center justify-center p-8">
                     <div className="flex flex-col items-center justify-center space-y-8">
                       {/* Collection Logos */}
                       <div className="flex items-center justify-center space-x-8 md:space-x-12 lg:space-x-16">
@@ -84,7 +86,7 @@ const Index = () => {
                         {/* Skulls on Ape */}
                         <div className="text-center">
                           <img 
-                            src={toxicSkullsClubLogo}
+                            src={skullsOnApeLogo}
                             alt="Skulls on Ape" 
                             className="w-24 h-24 md:w-32 md:h-32 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
                           />

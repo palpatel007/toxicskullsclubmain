@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
 import toxicSkullsClubLogo from '../assets/CollectionsLogo/ToxicSkullsClub.jpg';
 import skullsOfMayhemLogo from '../assets/CollectionsLogo/skullsofmayhem.jpg';
+import skullsOnApeLogo from '../assets/CollectionsLogo/skullonape.png';
 
 export interface Collection {
     id: string;
@@ -34,7 +35,7 @@ export const COLLECTIONS: Collection[] = [
         contract: '0x20e3c7d2ecd264615b57478ebc52acdcc5d92e37',
         chainId: 33139,
         description: 'ApeChain Collection',
-        image: toxicSkullsClubLogo
+        image: skullsOnApeLogo
     },
     {
         id: 'skulls-of-mayhem',

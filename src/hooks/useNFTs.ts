@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Collection } from '../components/CollectionSelector';
+import { buildApiUrl } from '../utils/api';
 
 export interface NFTAttribute {
   trait_type: string;
@@ -66,10 +67,10 @@ export const useNFTs = (wallet?: string, collection?: Collection) => {
 
         if (collection.chainId === 33139) {
           // ApeChain - use a different endpoint or modify the existing one
-          apiUrl = `http://192.168.1.3:3001/api/nfts?wallet=${wallet}&contract=${collection.contract}&page=1&limit=1000&chainId=${collection.chainId}`;
+          apiUrl = buildApiUrl(`/api/nfts?wallet=${wallet}&contract=${collection.contract}&page=1&limit=1000&chainId=${collection.chainId}`);
         } else {
           // Ethereum Mainnet
-          apiUrl = `http://192.168.1.3:3001/api/nfts?wallet=${wallet}&contract=${collection.contract}&page=1&limit=1000`;
+          apiUrl = buildApiUrl(`/api/nfts?wallet=${wallet}&contract=${collection.contract}&page=1&limit=1000`);
         }
 
         const response = await fetch(apiUrl, {
