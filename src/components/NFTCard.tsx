@@ -361,7 +361,7 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
           if (selectedCollection?.id === 'toxic-skulls-club' && toxicSkullsImages) {
             // For Toxic Skulls Club, download the appropriate image
             if (downloadFormat === 'Pre-Toxic PFP') {
-              const base64Data = toxicSkullsImages.gen0;
+              const base64Data = toxicSkullsImages.gen1;
               const response = await fetch(base64Data);
               const blob = await response.blob();
               const url = window.URL.createObjectURL(blob);
@@ -382,7 +382,7 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
               });
               return;
             } else if (downloadFormat === 'Toxic PFP') {
-              const base64Data = toxicSkullsImages.gen1;
+              const base64Data = toxicSkullsImages.gen0;
               const response = await fetch(base64Data);
               const blob = await response.blob();
               const url = window.URL.createObjectURL(blob);
@@ -488,6 +488,97 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
           
           // Default download for other collections or non-HTML files
           const downloadSrc = imageSrc || nft.metadata.image_url;
+          
+          // Special handling for Skulls of Mayhem to avoid CORS issues
+          if (selectedCollection?.id === 'skulls-of-mayhem') {
+            try {
+              // For Skulls of Mayhem, try to use the original metadata image URL instead of Dune API
+              const originalImageUrl = nft.metadata.image_url || nft.metadata.image;
+              
+              if (originalImageUrl && !originalImageUrl.includes('dune-echo-images.s3.eu-west-1.amazonaws.com')) {
+                // Try the original image URL first
+                const response = await fetch(originalImageUrl, { 
+                  mode: 'cors',
+                  headers: {
+                    'Accept': 'image/*'
+                  }
+                });
+                
+                if (response.ok) {
+                  const blob = await response.blob();
+                  const url = window.URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = `${nft.metadata.name || 'skull-mayhem'}.png`;
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                  window.URL.revokeObjectURL(url);
+                  
+                  toast.success(`Download started for ${nft.metadata.name} in ${downloadFormat} format!`, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
+                  return;
+                }
+              }
+              
+              // If original URL fails or is from Dune, create a canvas-based download
+              const img = new Image();
+              img.crossOrigin = 'anonymous';
+              
+              img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx?.drawImage(img, 0, 0);
+                
+                canvas.toBlob((blob) => {
+                  if (blob) {
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `${nft.metadata.name || 'skull-mayhem'}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    
+                    toast.success(`Download started for ${nft.metadata.name} in ${downloadFormat} format!`, {
+                      position: "top-right",
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                    });
+                  } else {
+                    toast.error('Failed to create image blob. Try right-clicking the image and selecting "Save image as..."');
+                  }
+                }, 'image/png');
+              };
+              
+              img.onerror = () => {
+                toast.error('Failed to load image. Try right-clicking the image and selecting "Save image as..."');
+              };
+              
+              // Set the image source to trigger the download
+              img.src = downloadSrc;
+              return;
+              
+            } catch (error) {
+              console.error('Skulls of Mayhem download error:', error);
+              toast.error('Download failed. Try right-clicking the image and selecting "Save image as..."');
+              return;
+            }
+          }
+          
+          // Regular download for other collections
           const response = await fetch(downloadSrc, { mode: 'cors' });
           const blob = await response.blob();
           const url = window.URL.createObjectURL(blob);

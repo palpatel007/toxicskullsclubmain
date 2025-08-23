@@ -18,7 +18,7 @@ const baseDownloadOptions = [
   {
     id: 'Toxic PFP',
     name: 'Toxic PFP',
-    description: 'High Quality PNG (2048×2024)',
+    description: 'High Quality PNG ',
     icon: '💀',
     color: 'bg-purple-500'
   },
@@ -32,7 +32,7 @@ const baseDownloadOptions = [
   {
     id: 'Pre-Toxic PFP',
     name: 'Pre-Toxic PFP',
-    description: 'High Quality PNG (2048×2024)',
+    description: 'High Quality PNG ',
     icon: '☠️',
     color: 'bg-green-500'
   },
