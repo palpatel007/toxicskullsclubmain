@@ -51,7 +51,7 @@ export const WalletButton = () => {
                   <button
                     onClick={openConnectModal}
                     type="button"
-                    className="connect-button hover:scale-105 active:scale-95 transition-transform text-xs sm:text-sm px-3 sm:px-6 py-2 sm:py-3"
+                    className="connect-button hover:scale-105 decorative-button active:scale-95 transition-transform text-xs sm:text-sm px-3 sm:px-6 py-2 sm:py-3"
                   >
                     Connect Wallet
                   </button>

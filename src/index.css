@@ -371,7 +371,7 @@
     @apply text-base sm:text-lg;
   }
   
-  /* Mobile-friendly buttons */
+  Mobile-friendly buttons
   .connect-button {
     @apply text-sm px-4 py-2;
     min-height: 44px;
@@ -384,11 +384,39 @@
   }
   
   /* Ensure wallet button is always visible on mobile */
-  .connect-button:before,
+  /* .connect-button:before,
   .connect-button:after {
     display: none;
   }
-  
+   */
+
+   .decorative-button:before {
+    content: "";
+    position: absolute;
+    background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/btn-after1.png) center center / cover no-repeat scroll;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 33%;
+    height: 26%;
+    /* right: 0; */
+    filter: invert(100%);
+    left: 65%;
+  }
+
+  .decorative-button:after {
+    content: "";
+    position: absolute;
+    background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/icon-after.png) center center / cover no-repeat scroll;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 25%;
+    height: 26%;
+    left: 9%;
+    filter: invert(100%);
+  }
+
   /* Mobile-friendly pagination */
   .pagination-container {
     @apply flex-wrap gap-1;
@@ -403,6 +431,32 @@
 @media (max-width: 768px) and (orientation: landscape) {
   .modal-content {
     @apply max-h-[80vh];
+  }
+  .decorative-button:before {
+    content: "";
+    position: absolute;
+    background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/btn-after1.png) center center / cover no-repeat scroll;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 33%;
+    height: 40%;
+    /* right: 0; */
+    filter: invert(100%);
+    left: 65%;
+  }
+
+  .decorative-button:after {
+    content: "";
+    position: absolute;
+    background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/icon-after.png) center center / cover no-repeat scroll;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 25%;
+    height: 40%;
+    left: 7%;
+    filter: invert(100%);
   }
 }
 
