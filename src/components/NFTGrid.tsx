@@ -32,7 +32,7 @@ const SkeletonCard = ({ index }: { index: number }) => (
   >
     <div className="relative overflow-hidden">
       {/* Skeleton image */}
-      <div className="w-full h-48 sm:h-52 lg:h-56 bg-white animate-pulse">
+      <div className="w-full aspect-square bg-white animate-pulse">
         <div className="w-full h-full bg-gradient-to-r from-white via-gray-100 to-white animate-pulse"></div>
       </div>
     </div>
@@ -50,7 +50,7 @@ export const NFTGrid: React.FC<NFTGridProps> = ({ nfts, loading, error, download
     return (
       <div className="space-y-6 sm:space-y-8">
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4 lg:gap-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -71,12 +71,12 @@ export const NFTGrid: React.FC<NFTGridProps> = ({ nfts, loading, error, download
         animate={{ opacity: 1 }}
       >
         <div className="flex items-center justify-center mb-4">
-          <div className="text-4xl mb-2">💀</div>
+          <div className="text-3xl sm:text-4xl mb-2">💀</div>
         </div>
-        <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+        <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-2">
           No NFTs found
         </h3>
-        <p className="text-gray-300 text-sm sm:text-base">
+        <p className="text-gray-300 text-xs sm:text-sm md:text-base">
           No NFTs available for this collection.
         </p>
       </motion.div>
@@ -91,12 +91,12 @@ export const NFTGrid: React.FC<NFTGridProps> = ({ nfts, loading, error, download
         animate={{ opacity: 1 }}
       >
         <div className="flex items-center justify-center mb-4">
-          <div className="text-4xl mb-2">💀</div>
+          <div className="text-3xl sm:text-4xl mb-2">💀</div>
         </div>
-        <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+        <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-2">
           No NFTs found
         </h3>
-        <p className="text-gray-300 text-sm sm:text-base">
+        <p className="text-gray-300 text-xs sm:text-sm md:text-base">
           No NFTs available for this collection.
         </p>
       </motion.div>
@@ -108,7 +108,7 @@ export const NFTGrid: React.FC<NFTGridProps> = ({ nfts, loading, error, download
       <AnimatePresence mode="wait">
         <motion.div
           key={currentPage}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4 lg:gap-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -122,7 +122,7 @@ export const NFTGrid: React.FC<NFTGridProps> = ({ nfts, loading, error, download
 
       {/* Modern Pagination Bar */}
       {totalPages > 1 && (
-        <div className="flex flex-row flex-wrap justify-center items-center gap-2 mt-6">
+        <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-2 mt-6">
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}

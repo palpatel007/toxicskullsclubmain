@@ -156,9 +156,24 @@
     border-radius: 20px;
     padding: 8px 20px;
     position: relative;
-
   }
-  .connect-button:before {
+
+  /* Decorative dripping effect buttons - separate from wallet button */
+  .decorative-button {
+    background-color: #FFFFFF;
+    font-family: "Jost", Sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 16px;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    color: #000000;
+    border-radius: 20px;
+    padding: 8px 20px;
+    position: relative;
+  }
+
+  .decorative-button:before {
     content: "";
     position: absolute;
     background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/btn-after1.png) center center / cover no-repeat scroll;
@@ -170,22 +185,27 @@
     /* right: 0; */
     filter: invert(100%);
     left: 65%;
-}
-.connect-button:after {
-  content: "";
-  position: absolute;
-  background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/icon-after.png) center center / cover no-repeat scroll;
-  top: 40px;
-  left: 0;
-  right: 0;
-  width: 25%;
-  height: 50%;
-  left: 7%;
-  filter: invert(100%);
+  }
 
-}
+  .decorative-button:after {
+    content: "";
+    position: absolute;
+    background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/icon-after.png) center center / cover no-repeat scroll;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 25%;
+    height: 50%;
+    left: 7%;
+    filter: invert(100%);
+  }
   
   .connect-button:hover {
+    @apply shadow-lg;
+    transform: translateY(-2px);
+  }
+
+  .decorative-button:hover {
     @apply shadow-lg;
     transform: translateY(-2px);
   }
@@ -285,6 +305,135 @@
   
   .Toastify__toast {
     font-size: 0.875rem;
+  }
+}
+
+/* Mobile-specific styles */
+@media (max-width: 1024px) {
+  /* Adjust content panel padding for mobile */
+  .content-panel {
+    @apply p-4 sm:p-6;
+  }
+  
+  /* Improve mobile card spacing */
+  .nft-card {
+    @apply rounded-lg;
+  }
+  
+  /* Mobile-friendly download options */
+  .download-option {
+    @apply p-3 sm:p-4;
+  }
+  
+  /* Mobile collection cards */
+  .collection-card {
+    @apply p-3 sm:p-4;
+  }
+  
+  /* Mobile chain buttons */
+  .chain-button {
+    @apply p-3 sm:p-4;
+  }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  /* Improve touch targets */
+  button, a {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Better mobile spacing */
+  .container {
+    @apply px-4;
+  }
+  
+  /* Mobile-friendly grid */
+  .main-grid {
+    @apply grid-cols-1 gap-4;
+  }
+  
+  /* Mobile modal improvements */
+  .modal-content {
+    @apply max-w-[95vw] max-h-[90vh];
+  }
+  
+  /* Mobile-friendly text sizes */
+  h1 {
+    @apply text-xl sm:text-2xl;
+  }
+  
+  h2 {
+    @apply text-lg sm:text-xl;
+  }
+  
+  h3 {
+    @apply text-base sm:text-lg;
+  }
+  
+  /* Mobile-friendly buttons */
+  .connect-button {
+    @apply text-sm px-4 py-2;
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    position: relative;
+  }
+  
+  /* Ensure wallet button is always visible on mobile */
+  .connect-button:before,
+  .connect-button:after {
+    display: none;
+  }
+  
+  /* Mobile-friendly pagination */
+  .pagination-container {
+    @apply flex-wrap gap-1;
+  }
+  
+  .pagination-button {
+    @apply min-w-[36px] min-h-[36px] text-sm;
+  }
+}
+
+/* Mobile landscape improvements */
+@media (max-width: 768px) and (orientation: landscape) {
+  .modal-content {
+    @apply max-h-[80vh];
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  /* Even smaller text for very small screens */
+  h1 {
+    @apply text-lg;
+  }
+  
+  h2 {
+    @apply text-base;
+  }
+  
+  h3 {
+    @apply text-sm;
+  }
+  
+  /* Smaller buttons for very small screens */
+  .connect-button {
+    @apply text-xs px-3 py-1.5;
+    min-height: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Compact grid for very small screens */
+  .nft-grid {
+    @apply grid-cols-2 gap-2;
   }
 }
 

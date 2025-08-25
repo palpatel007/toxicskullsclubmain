@@ -133,7 +133,7 @@ export const Sidebar = ({ selectedFormat, onFormatChange, selectedCollection, fo
 
   return (
     <motion.aside
-      className="w-80 bg-white backdrop-blur-sm rounded-xl shadow-lg p-6 fixed top-28 left-0 h-screen overflow-y-auto z-40 mt-2.5"
+      className="w-80 bg-white backdrop-blur-sm rounded-xl shadow-lg p-6 fixed top-28 left-0 h-screen overflow-y-auto z-40 mt-2.5 hidden lg:block"
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}

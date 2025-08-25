@@ -51,7 +51,7 @@ export const WalletButton = () => {
                   <button
                     onClick={openConnectModal}
                     type="button"
-                    className="connect-button hover:scale-105 active:scale-95 transition-transform"
+                    className="connect-button hover:scale-105 active:scale-95 transition-transform text-xs sm:text-sm px-3 sm:px-6 py-2 sm:py-3"
                   >
                     Connect Wallet
                   </button>
@@ -63,7 +63,7 @@ export const WalletButton = () => {
                   <button
                     onClick={openChainModal}
                     type="button"
-                    className="bg-red-600 text-white border border-red-500 px-6 py-3 font-bold transition-all duration-300 hover:bg-red-700 hover:border-red-400 hover:scale-105 active:scale-95"
+                    className="bg-red-600 text-white border border-red-500 px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold transition-all duration-300 hover:bg-red-700 hover:border-red-400 hover:scale-105 active:scale-95 rounded-lg"
                   >
                     Wrong Network
                   </button>
@@ -71,33 +71,33 @@ export const WalletButton = () => {
               }
 
               return (
-                <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
+                <div className="flex flex-row items-center gap-1 sm:gap-2">
                   <button
                     onClick={openChainModal}
-                    className="connect-button text-sm flex items-center gap-2 hover:scale-105 transition-transform"
+                    className="connect-button text-xs sm:text-sm flex items-center gap-1 sm:gap-2 hover:scale-105 transition-transform px-2 sm:px-3 py-1 sm:py-2"
                   >
                     {chain.hasIcon && (
-                      <div className="w-4 h-4">
+                      <div className="w-3 h-3 sm:w-4 sm:h-4">
                         {chain.iconUrl && (
                           <img
                             alt={chain.name ?? 'Chain icon'}
                             src={chain.iconUrl}
-                            className="w-4 h-4"
+                            className="w-3 h-3 sm:w-4 sm:h-4"
                           />
                         )}
                       </div>
                     )}
-                    <span className="font-medium truncate max-w-[120px]">{chain.name}</span>
+                    <span className="font-medium truncate max-w-[60px] sm:max-w-[120px] hidden sm:block">{chain.name}</span>
                   </button>
 
                   <button
                     onClick={openAccountModal}
-                    className="connect-button text-sm flex items-center gap-2 hover:scale-105 transition-transform"
+                    className="connect-button text-xs sm:text-sm flex items-center gap-1 sm:gap-2 hover:scale-105 transition-transform px-2 sm:px-3 py-1 sm:py-2"
                   >
-                    <div className="w-4 h-4 bg-green-500 text-white flex items-center justify-center text-xs font-bold border border-green-500 rounded-full">
+                    <div className="w-3 h-3 sm:w-4 sm:h-4 bg-green-500 text-white flex items-center justify-center text-xs font-bold border border-green-500 rounded-full">
                       {account.displayName?.[0]?.toUpperCase() || 'A'}
                     </div>
-                    <span className="font-medium truncate max-w-[120px]">{account.displayName}</span>
+                    <span className="font-medium truncate max-w-[60px] sm:max-w-[120px] hidden sm:block">{account.displayName}</span>
                   </button>
                 </div>
                 

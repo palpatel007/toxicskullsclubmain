@@ -45,7 +45,7 @@ export interface APIResponse {
 // const WALLET = '0x5Ecd3D5EE0251a7e185E630b936A29c01E90041b';
 // const WALLET2 = '0xb1cd3b77c87b2114d2c408c57c6348cc38be300f';
 // const WALLET = '0xb4b6e7f0af42260179d654276d7d3a5a223b3ef8';
-const WALLET = '0x435292fe4012Dd1fe78D35C84e1762D19197EdB2';
+// const WALLET = '0x435292fe4012Dd1fe78D35C84e1762D19197EdB2';
 
 export const useNFTs = (wallet?: string, collection?: Collection) => {
   const [nfts, setNfts] = useState<NFT[]>([]);
@@ -67,10 +67,10 @@ export const useNFTs = (wallet?: string, collection?: Collection) => {
 
         if (collection.chainId === 33139) {
           // ApeChain - use a different endpoint or modify the existing one
-          apiUrl = buildApiUrl(`/api/nfts?wallet=${WALLET}&contract=${collection.contract}&page=1&limit=1000&chainId=${collection.chainId}`);
+          apiUrl = buildApiUrl(`/api/nfts?wallet=${wallet}&contract=${collection.contract}&page=1&limit=1000&chainId=${collection.chainId}`);
         } else {
           // Ethereum Mainnet
-          apiUrl = buildApiUrl(`/api/nfts?wallet=${WALLET}&contract=${collection.contract}&page=1&limit=1000`);
+          apiUrl = buildApiUrl(`/api/nfts?wallet=${wallet}&contract=${collection.contract}&page=1&limit=1000`);
         }
 
         const response = await fetch(apiUrl, {

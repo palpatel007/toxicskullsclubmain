@@ -32,7 +32,7 @@ interface NFTCardProps {
 
 // Skeleton loading component
 const ImageSkeleton = () => (
-  <div className="w-full h-64 bg-gray-700 animate-pulse rounded-lg">
+  <div className="w-full aspect-square bg-gray-700 animate-pulse rounded-lg">
     <div className="w-full h-full bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 animate-pulse"></div>
   </div>
 );
@@ -635,11 +635,11 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
         <div className="relative overflow-hidden">
           {/* Token ID Display - Top Right Corner Overlay */}
           <div className="absolute top-2 right-2 z-10">
-            <span className="text-lg text-black">#{nft.token_id}</span>
+            <span className="text-sm sm:text-lg text-black">#{nft.token_id}</span>
           </div>
 
           {show3D ? (
-            <div style={{ width: '100%', height: '10rem', background: '#ddd' }}>
+            <div style={{ width: '100%', aspectRatio: '1', background: '#ddd' }}>
               {downloadFormat === 'GLB' ? (
                 hasGLB ? (
                   <GLBViewer modelPath={glbUrl || ''} backgroundColor="#dddddd" />
@@ -697,7 +697,7 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
               )}
             </div>
           ) : (
-            <div className="relative w-full h-64">
+            <div className="relative w-full aspect-square">
               {/* Skeleton loading for Toxic Skulls Club HTML images being fetched */}
               {selectedCollection?.id === 'toxic-skulls-club' && !toxicSkullsImages && (downloadFormat === 'Pre-Toxic PFP' || downloadFormat === 'Toxic PFP') && (
                 <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center rounded-lg">
@@ -709,41 +709,8 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
                 </div>
               )}
 
-              {/* Loading state for local images */}
-              {localImageLoading && (downloadFormat === 'Toxic Transparent' || downloadFormat === 'Pre-Toxic Transparent' || downloadFormat === 'Pixel Art') && (
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center rounded-lg">
-                  <div className="text-center text-gray-300">
-                    <div className="text-3xl mb-2">🔄</div>
-                    <div className="text-sm font-medium">Loading #{nft.token_id}</div>
-                    <div className="text-xs text-gray-400 mt-1">Loading {downloadFormat}...</div>
-                  </div>
-                </div>
-              )}
-
               {/* Skeleton loading for other cases */}
               {imageLoading && !(selectedCollection?.id === 'toxic-skulls-club' && !toxicSkullsImages && (downloadFormat === 'Pre-Toxic PFP' || downloadFormat === 'Toxic PFP')) && <ImageSkeleton />}
-
-              {/* Loading state when imageSrc is null (Toxic Skulls Club images loading) */}
-              {!imageSrc && selectedCollection?.id === 'toxic-skulls-club' && (downloadFormat === 'Pre-Toxic PFP' || downloadFormat === 'Toxic PFP') && (
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center rounded-lg">
-                  <div className="text-center text-gray-300">
-                    <div className="text-3xl mb-2">🔄</div>
-                    <div className="text-sm font-medium">Loading Toxic Skull #{nft.token_id}</div>
-                    <div className="text-xs text-gray-400 mt-1">Fetching images...</div>
-                  </div>
-                </div>
-              )}
-
-              {/* Error state for Toxic Transparent when image not found */}
-              {!imageSrc && selectedCollection?.id === 'toxic-skulls-club' && downloadFormat === 'Toxic Transparent' && (
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center rounded-lg">
-                  <div className="text-center text-gray-300">
-                    <div className="text-3xl mb-2">👻</div>
-                    <div className="text-sm font-medium">Toxic Transparent #{nft.token_id}</div>
-                    <div className="text-xs text-gray-400 mt-1">Transparent image not found</div>
-                  </div>
-                </div>
-              )}
 
               {/* Error state */}
               {imageError && (
@@ -756,12 +723,23 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
                 </div>
               )}
 
+              {/* Not found state */}
+              {!imageSrc && !imageLoading && !imageError && (
+                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center rounded-lg">
+                  <div className="text-center text-gray-300">
+                    <div className="text-3xl mb-2">❌</div>
+                    <div className="text-sm font-medium">#{nft.token_id}</div>
+                    <div className="text-xs text-gray-400 mt-1">Image not found</div>
+                  </div>
+                </div>
+              )}
+
               {/* Actual image */}
               {imageSrc && (
               <img
                 src={imageSrc}
                 alt={nft.metadata.name}
-                className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${imageLoading ? 'opacity-0' : 'opacity-100'
+                className={`w-full h-full object-contain transition-all duration-300 group-hover:scale-110 ${imageLoading ? 'opacity-0' : 'opacity-100'
                   } ${imageError ? 'hidden' : ''}`}
                 loading="lazy"
                 onLoad={handleImageLoad}
@@ -783,15 +761,15 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
           <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 flex gap-1 sm:gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <motion.button
               onClick={e => { e.stopPropagation(); handleViewImage(e); }}
-              className="flex items-center justify-center p-2 sm:p-3 bg-black text-white hover:bg-white hover:text-black border border-black transition-colors"
+              className="flex items-center justify-center p-1.5 sm:p-2 lg:p-3 bg-black text-white hover:bg-white hover:text-black border border-black transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Eye className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
             </motion.button>
             <motion.button
               onClick={e => { e.stopPropagation(); handleDownload(e); }}
-              className={`flex items-center justify-center p-2 sm:p-3 border transition-colors ${(downloadFormat === 'GLB' && !hasGLB) || (downloadFormat === 'FBX' && !hasFBX)
+              className={`flex items-center justify-center p-1.5 sm:p-2 lg:p-3 border transition-colors ${(downloadFormat === 'GLB' && !hasGLB) || (downloadFormat === 'FBX' && !hasFBX)
                   ? 'bg-gray-400 text-gray-600 border-gray-400 cursor-not-allowed'
                   : 'bg-black text-white hover:bg-white hover:text-black border-black'
                 }`}
@@ -803,7 +781,7 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
                   : 'Download'
               }
             >
-              <Download className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Download className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
             </motion.button>
           </div>
         </div>
@@ -827,35 +805,35 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
 
       {/* Modal for viewing image or GLB */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4">
-          <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-10 flex gap-1 sm:gap-2">
-            <button
-              onClick={() => setZoom((z) => Math.max(0.5, z - 0.2))}
-              className="flex items-center justify-center p-2 bg-black text-white hover:bg-white hover:text-black border border-white transition-colors"
-            >
-              <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-            <button
-              onClick={() => setZoom((z) => Math.min(3, z + 0.2))}
-              className="flex items-center justify-center p-2 bg-black text-white hover:bg-white hover:text-black border border-white transition-colors"
-            >
-              <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-            <button
-              onClick={e => { e.stopPropagation(); handleDownload(e); }}
-              className="flex items-center justify-center p-2 bg-black text-white hover:bg-white hover:text-black border border-white transition-colors"
-            >
-              <Download className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-            <button
-              onClick={() => setModalOpen(false)}
-              className="flex items-center justify-center p-2 bg-white text-black hover:bg-black hover:text-white border border-black transition-colors"
-            >
-              <X className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-          </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-2 sm:p-4">
+                  <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-10 flex gap-1 sm:gap-2">
+          <button
+            onClick={() => setZoom((z) => Math.max(0.5, z - 0.2))}
+            className="flex items-center justify-center p-1.5 sm:p-2 bg-black text-white hover:bg-white hover:text-black border border-white transition-colors"
+          >
+            <ZoomOut className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
+          </button>
+          <button
+            onClick={() => setZoom((z) => Math.min(3, z + 0.2))}
+            className="flex items-center justify-center p-1.5 sm:p-2 bg-black text-white hover:bg-white hover:text-black border border-white transition-colors"
+          >
+            <ZoomIn className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
+          </button>
+          <button
+            onClick={e => { e.stopPropagation(); handleDownload(e); }}
+            className="flex items-center justify-center p-1.5 sm:p-2 bg-black text-white hover:bg-white hover:text-black border border-white transition-colors"
+          >
+            <Download className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
+          </button>
+          <button
+            onClick={() => setModalOpen(false)}
+            className="flex items-center justify-center p-1.5 sm:p-2 bg-white text-black hover:bg-black hover:text-white border border-black transition-colors"
+          >
+            <X className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
+          </button>
+        </div>
           {show3D ? (
-            <div style={{ width: 480, height: 480, background: '#ddd', borderRadius: 12 }}>
+            <div style={{ width: '90vw', maxWidth: '480px', height: '90vw', maxHeight: '480px', background: '#ddd', borderRadius: 12 }}>
               {downloadFormat === 'GLB' ? (
                 hasGLB ? (
                   <GLBViewer modelPath={glbUrl || ''} backgroundColor="#dddddd" />
@@ -914,20 +892,20 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
               )}
             </div>
           ) : (
-            <div className="relative" style={{ maxHeight: '80vh', maxWidth: '90vw' }}>
+            <div className="relative" style={{ maxHeight: '85vh', maxWidth: '95vw' }}>
               {/* Skeleton loading for modal */}
               {imageLoading && (
-                <div className="w-full h-96 bg-gray-200 animate-pulse rounded-lg">
+                <div className="w-full aspect-square bg-gray-200 animate-pulse rounded-lg">
                   <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"></div>
                 </div>
               )}
 
               {/* Error state for modal */}
               {imageError && (
-                <div className="w-full h-96 bg-gray-700 flex items-center justify-center rounded-lg">
+                <div className="w-full aspect-square bg-gray-700 flex items-center justify-center rounded-lg">
                   <div className="text-center text-gray-400">
-                    <div className="text-4xl mb-4">🖼️</div>
-                    <div className="text-lg">Image not available</div>
+                    <div className="text-3xl sm:text-4xl mb-2 sm:mb-4">🖼️</div>
+                    <div className="text-base sm:text-lg">Image not available</div>
                   </div>
                 </div>
               )}
@@ -938,8 +916,8 @@ export const NFTCard: React.FC<NFTCardProps> = ({ nft, index, downloadFormat, sh
                 alt={nft.metadata.name}
                 style={{
                   transform: `scale(${zoom})`,
-                  maxHeight: '80vh',
-                  maxWidth: '90vw',
+                  maxHeight: '85vh',
+                  maxWidth: '95vw',
                   transition: 'transform 0.2s',
                   opacity: imageLoading ? 0 : 1,
                   display: imageError ? 'none' : 'block'

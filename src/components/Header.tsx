@@ -9,7 +9,7 @@ interface HeaderProps {
 export const Header = ({ selectedCollection }: HeaderProps) => {
   return (
     <motion.header
-      className="main-header sticky top-0 z-50"
+      className="main-header sticky top-0 z-50 hidden lg:block"
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
