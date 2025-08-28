@@ -46,6 +46,7 @@ export interface APIResponse {
 // const WALLET2 = '0xb1cd3b77c87b2114d2c408c57c6348cc38be300f';
 // const WALLET = '0xb4b6e7f0af42260179d654276d7d3a5a223b3ef8';
 // const WALLET = '0x435292fe4012Dd1fe78D35C84e1762D19197EdB2';
+// const WALLET = '0x0e8F1969ef51bBB068af8502656EF286fcdf6297';
 
 export const useNFTs = (wallet?: string, collection?: Collection) => {
   const [nfts, setNfts] = useState<NFT[]>([]);

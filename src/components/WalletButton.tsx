@@ -2,6 +2,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/CollectionsLogo/ToxicSkullsClub.jpg';
 
 export const WalletButton = () => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ export const WalletButton = () => {
                 <div className="flex flex-row items-center gap-1 sm:gap-2">
                   <button
                     onClick={openChainModal}
-                    className="connect-button text-xs sm:text-sm flex items-center gap-1 sm:gap-2 hover:scale-105 transition-transform px-2 sm:px-3 py-1 sm:py-2"
+                    className="connect-button decorative-button1 text-xs sm:text-sm flex items-center gap-1 sm:gap-2 hover:scale-105 transition-transform px-2 sm:px-3 py-1 sm:py-2"
                   >
                     {chain.hasIcon && (
                       <div className="w-3 h-3 sm:w-4 sm:h-4">
@@ -92,11 +93,13 @@ export const WalletButton = () => {
 
                   <button
                     onClick={openAccountModal}
-                    className="connect-button text-xs sm:text-sm flex items-center gap-1 sm:gap-2 hover:scale-105 transition-transform px-2 sm:px-3 py-1 sm:py-2"
+                    className="connect-button decorative-button1 text-xs sm:text-sm flex items-center gap-1 sm:gap-2 hover:scale-105 transition-transform px-2 sm:px-3 py-1 sm:py-2"
                   >
-                    <div className="w-3 h-3 sm:w-4 sm:h-4 bg-green-500 text-white flex items-center justify-center text-xs font-bold border border-green-500 rounded-full">
-                      {account.displayName?.[0]?.toUpperCase() || 'A'}
-                    </div>
+                    <img
+                      src={logo}
+                      alt="Wallet avatar"
+                      className="w-3 h-3 sm:w-4 sm:h-4 rounded-full object-cover"
+                    />
                     <span className="font-medium truncate max-w-[60px] sm:max-w-[120px] hidden sm:block">{account.displayName}</span>
                   </button>
                 </div>

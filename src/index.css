@@ -199,6 +199,33 @@
     left: 7%;
     filter: invert(100%);
   }
+
+  .decorative-button1:before {
+    content: "";
+    position: absolute;
+    background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/btn-after1.png) center center / cover no-repeat scroll;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 33%;
+    height: 50%;
+    /* right: 0; */
+    filter: invert(100%);
+    left: 61%;
+  }
+
+  .decorative-button1:after {
+    content: "";
+    position: absolute;
+    background: url(https://toxicskullsclub.io/wp-content/uploads/2024/02/icon-after.png) center center / cover no-repeat scroll;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 25%;
+    height: 50%;
+    left: 7%;
+    filter: invert(100%);
+  }
   
   .connect-button:hover {
     @apply shadow-lg;
@@ -302,7 +329,12 @@
     right: 1rem;
     left: 1rem;
   }
-  
+  .decorative-button1:before,
+  .decorative-button1:after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+  }
   .Toastify__toast {
     font-size: 0.875rem;
   }
